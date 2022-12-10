@@ -6,13 +6,17 @@ import {
   HttpException,
   HttpStatus,
   Param,
-  ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MongoIdPipe } from 'src/common/mongo-id/mongo-id.pipe';
-import { CreateProductDto, UpdateProductDto } from '../../dtos/products.dtos';
+import {
+  CreateProductDto,
+  FilterProductDto,
+  UpdateProductDto,
+} from '../../dtos/products.dtos';
 
 import { ProductsService } from '../../services/products/products.service';
 
@@ -21,8 +25,8 @@ import { ProductsService } from '../../services/products/products.service';
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
   @Get('')
-  products() {
-    return this.productsService.findAll();
+  products(@Query() params: FilterProductDto) {
+    return this.productsService.findAll(params);
   }
 
   @Get(':id')
@@ -36,7 +40,6 @@ export class ProductsController {
 
   @Post('')
   async create(@Body() payload: CreateProductDto) {
-    console.log(payload);
     return this.productsService.create(payload);
   }
 
