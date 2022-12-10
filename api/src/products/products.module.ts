@@ -1,9 +1,11 @@
+import { Brand, BrandSchema } from './entities/brand.entity';
+import { BrandsController } from './controllers/brands/brands.controller';
 import { Module } from '@nestjs/common';
 import { ProductsController } from './controllers/products/products.controller';
 import { ProductsService } from './services/products/products.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductSchema, Product } from './entities/product.entity';
-import { BrandService } from './service/brand/brand.service';
+import { BrandsService } from './services/brands/brands.service';
 
 @Module({
   imports: [
@@ -12,10 +14,14 @@ import { BrandService } from './service/brand/brand.service';
         name: Product.name,
         schema: ProductSchema,
       },
+      {
+        name: Brand.name,
+        schema: BrandSchema,
+      },
     ]),
   ],
-  controllers: [ProductsController],
-  providers: [ProductsService, BrandService],
+  controllers: [ProductsController, BrandsController],
+  providers: [ProductsService, BrandsService],
   exports: [ProductsService],
 })
 export class ProductsModule {}

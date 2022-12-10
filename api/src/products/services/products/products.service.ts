@@ -27,11 +27,12 @@ export class ProductsService {
       .find(filters)
       .skip(offset || 0)
       .limit(limit)
+      .populate('brand')
       .exec();
   }
 
   findOne(id: string) {
-    return this.productModel.findById(id).exec();
+    return this.productModel.findById(id).populate('brand').exec();
   }
 
   create(payload: CreateProductDto) {
