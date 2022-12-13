@@ -10,6 +10,7 @@ import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments } from './env/enviroments';
+import { AuthModule } from './auth/auth.module';
 import config from './env/config';
 
 @Module({
@@ -27,6 +28,7 @@ import config from './env/config';
         DATABASE_PORT: Joi.number().required(),
       }),
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

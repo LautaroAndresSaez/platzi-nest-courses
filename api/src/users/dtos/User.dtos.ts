@@ -7,7 +7,10 @@ export class AddUser {
   @IsString()
   @IsNotEmpty()
   readonly name: string;
-  @IsDate({})
+  @IsString()
+  @IsNotEmpty()
+  readonly password: string;
+  @IsDate()
   @IsNotEmpty()
   readonly birthday: Date;
 }

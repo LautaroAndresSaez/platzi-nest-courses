@@ -1,3 +1,4 @@
+import { Public } from './../../../auth/decorators/public.decorator';
 import {
   Body,
   Controller,
@@ -9,8 +10,11 @@ import {
   Post,
   Put,
   Query,
+  SetMetadata,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyGuard } from 'src/auth/guards/api-key/api-key.guard';
 import { MongoIdPipe } from 'src/common/mongo-id/mongo-id.pipe';
 import {
   CreateProductDto,
@@ -21,10 +25,13 @@ import {
 import { ProductsService } from '../../services/products/products.service';
 
 @ApiTags('products')
+@UseGuards(ApiKeyGuard)
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
+
   @Get('')
+  @Public()
   products(@Query() params: FilterProductDto) {
     return this.productsService.findAll(params);
   }
